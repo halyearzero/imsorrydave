@@ -25,12 +25,16 @@ branching endings and character motivations revealed through onboard logs.
 
 ## Mechanics
 - EVA movement with inertia
+- Zero-G mode can be toggled with **Z** for momentum-based controls
 - Limited oxygen supply
-- Real-time hacking mini-games
+- Terminals present short hacking puzzles that increase in length
+- Contextual actions like repairing systems or cutting wires with **E**
 - Voice cues from HAL ("I can't let you do that, Dave") trigger hazards
 
 ## Controls
 - Arrow keys or **WASD** to move
+- **Z** toggles zero-G movement
+- **E** interacts with nearby terminals and systems
 
 ## How to Run
 1. Install dependencies with `pip install -r requirements.txt`.
