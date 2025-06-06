@@ -1,11 +1,12 @@
 import os
+import sys
 
-# Use dummy video/audio drivers if no display/valid sound device
-os.environ.setdefault("SDL_VIDEODRIVER", "dummy")
-os.environ.setdefault("SDL_AUDIODRIVER", "dummy")
+# Use dummy SDL drivers only when no display is detected (e.g. headless server)
+if sys.platform not in ("win32", "darwin") and not os.getenv("DISPLAY"):
+    os.environ.setdefault("SDL_VIDEODRIVER", "dummy")
+    os.environ.setdefault("SDL_AUDIODRIVER", "dummy")
 
 import pygame
-import sys
 import random
 from adaptive_ai import AdaptiveAI
 
