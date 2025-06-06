@@ -6,6 +6,7 @@ os.environ.setdefault("SDL_AUDIODRIVER", "dummy")
 
 import pygame
 import sys
+from adaptive_ai import AdaptiveAI
 
 # Screen dimensions
 WIDTH, HEIGHT = 800, 600
@@ -97,6 +98,19 @@ class LogEntry:
             pygame.draw.rect(surface, (100, 100, 100), self.rect)
 
 
+class OxygenCanister:
+    """Restores a portion of the player's oxygen when collected."""
+    def __init__(self, rect, amount=20):
+        self.rect = rect
+        self.amount = amount
+        self.collected = False
+        self.active = True
+
+    def draw(self, surface):
+        if not self.collected and self.active:
+            pygame.draw.rect(surface, (0, 150, 150), self.rect)
+
+
 def draw_hud(surface, font, player):
     """Render simple HUD elements like oxygen level."""
     oxygen_text = font.render(f"Oxygen: {int(player.oxygen)}%", True, HUD_COLOR)
@@ -112,6 +126,7 @@ def main():
 
     messenger = MessageManager()
     player = Player(messenger)
+    ai = AdaptiveAI(messenger)
 
     logs = [
         LogEntry(pygame.Rect(150, 150, 30, 30),
@@ -120,6 +135,11 @@ def main():
                  "Log 2: Engineering report. Multiple crew missing."),
         LogEntry(pygame.Rect(350, 100, 30, 30),
                  "Log 3: Emergency protocol initiated without consent."),
+    ]
+
+    canisters = [
+        OxygenCanister(pygame.Rect(200, 300, 20, 20)),
+        OxygenCanister(pygame.Rect(500, 200, 20, 20)),
     ]
 
     running = True
@@ -132,16 +152,29 @@ def main():
         player.handle_input(keys)
         player.update()
 
+        for canister in canisters:
+            if (not canister.collected and canister.active and
+                    player.rect.colliderect(canister.rect)):
+                canister.collected = True
+                player.oxygen = min(100, player.oxygen + canister.amount)
+                messenger.show("HAL: Enjoy that extra oxygen while you can, Dave.")
+                ai.register_canister_use()
+
         for log in logs:
             if not log.collected and player.rect.colliderect(log.rect):
                 log.collected = True
                 messenger.show(log.text)
+                ai.register_log_pickup()
+
+        ai.update(canisters, logs)
 
         messenger.update()
 
         screen.fill(BG_COLOR)
         for log in logs:
             log.draw(screen)
+        for canister in canisters:
+            canister.draw(screen)
         player.draw(screen)
         messenger.draw(screen, font)
         draw_hud(screen, font, player)
