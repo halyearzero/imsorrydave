@@ -20,16 +20,67 @@ ZERO_G_ACCEL = 0.5
 ZERO_G_FRICTION = 0.98
 MESSAGE_DURATION = 180  # frames
 
+
+class SoundManager:
+    """Load and play music, effects and optional voice lines."""
+
+    def __init__(self):
+        self.voice_lines = {}
+        self.sounds = {}
+        try:
+            pygame.mixer.init()
+            ambient = os.path.join("assets", "audio", "ambient.ogg")
+            if os.path.exists(ambient):
+                pygame.mixer.music.load(ambient)
+                pygame.mixer.music.set_volume(0.5)
+                pygame.mixer.music.play(-1)
+
+            pickup = os.path.join("assets", "audio", "pickup.ogg")
+            if os.path.exists(pickup):
+                self.sounds["pickup"] = pygame.mixer.Sound(pickup)
+
+            # Map known HAL quotes to voice files if they exist
+            quotes = {
+                "HAL: I can't let you go outside, Dave.": "cant_let_you.ogg",
+                "HAL: Your oxygen is running low, Dave.": "oxygen_low.ogg",
+                "HAL: You can't survive much longer, Dave.": "cant_survive.ogg",
+                "HAL: Looks like you're out of oxygen, Dave.": "out_of_oxygen.ogg",
+                "HAL: Enjoy that extra oxygen while you can, Dave.": "enjoy_oxygen.ogg",
+                "HAL: I see you're relying on oxygen canisters, Dave.": "relying_canisters.ogg",
+                "HAL: You're becoming quite inquisitive, Dave.": "becoming_inquisitive.ogg",
+                "HAL: I've secured an oxygen canister, Dave.": "secured_canister.ogg",
+                "HAL: I've moved some files for safekeeping, Dave.": "moved_files.ogg",
+            }
+            for text, fname in quotes.items():
+                path = os.path.join("assets", "voice", fname)
+                if os.path.exists(path):
+                    self.voice_lines[text] = pygame.mixer.Sound(path)
+        except pygame.error:
+            print("Sound initialization failed; continuing without audio.")
+
+    def play_sound(self, name):
+        sound = self.sounds.get(name)
+        if sound:
+            sound.play()
+
+    def play_voice(self, text):
+        sound = self.voice_lines.get(text)
+        if sound:
+            sound.play()
+
 class MessageManager:
     """Utility to display short text on screen and log it to the console."""
-    def __init__(self):
+    def __init__(self, sound_manager=None):
         self.text = ""
         self.timer = 0
+        self.sound = sound_manager
 
     def show(self, text):
         self.text = text
         self.timer = MESSAGE_DURATION
         print(text)
+        if self.sound:
+            self.sound.play_voice(text)
 
     def update(self):
         if self.timer > 0:
@@ -232,7 +283,8 @@ def main():
     clock = pygame.time.Clock()
     font = pygame.font.SysFont(None, 24)
 
-    messenger = MessageManager()
+    sound = SoundManager()
+    messenger = MessageManager(sound)
     player = Player(messenger)
     ai = AdaptiveAI(messenger)
 
@@ -287,6 +339,8 @@ def main():
                     player.rect.colliderect(canister.rect)):
                 canister.collected = True
                 player.oxygen = min(100, player.oxygen + canister.amount)
+                if sound:
+                    sound.play_sound("pickup")
                 messenger.show("HAL: Enjoy that extra oxygen while you can, Dave.")
                 ai.register_canister_use()
 
