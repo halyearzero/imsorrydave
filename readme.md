@@ -30,3 +30,12 @@ Mechanics:
 	•	Limited oxygen
 	•	Real-time hacking mini-games
 	•	Voice cues from HAL (“I can’t let you do that, Dave”) trigger hazards
+
+⸻
+
+How to Run:
+1. Install dependencies with `pip install -r requirements.txt`.
+2. Run the game with `python main.py`.
+   - The game automatically falls back to SDL's dummy video and audio drivers
+     if no display or sound hardware is available (e.g., on a server).
+
