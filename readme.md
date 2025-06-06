@@ -41,6 +41,9 @@ branching endings and character motivations revealed through onboard logs.
 2. Run the game with `python main.py`.
    - The game automatically falls back to SDL's dummy video and audio drivers if no display or sound hardware is available (e.g. on a server).
 
+## First Demo
+See [`docs/first_demo.md`](docs/first_demo.md) for a short walkthrough of the prototype.
+
 ## Vision for Award-Winning Quality
 These points highlight the direction we plan to take in order to create a 2D experience worthy of industry accolades.
 
