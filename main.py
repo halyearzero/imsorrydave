@@ -11,6 +11,7 @@ import sys
 WIDTH, HEIGHT = 800, 600
 BG_COLOR = (0, 0, 20)
 PLAYER_COLOR = (200, 200, 255)
+HUD_COLOR = (255, 255, 255)
 PLAYER_SIZE = 40
 PLAYER_SPEED = 5
 
@@ -53,11 +54,18 @@ class Player:
         pygame.draw.rect(surface, PLAYER_COLOR, self.rect)
 
 
+def draw_hud(surface, font, player):
+    """Render simple HUD elements like oxygen level."""
+    oxygen_text = font.render(f"Oxygen: {int(player.oxygen)}%", True, HUD_COLOR)
+    surface.blit(oxygen_text, (10, 10))
+
+
 def main():
     pygame.init()
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.display.set_caption("I'm Sorry, Dave")
     clock = pygame.time.Clock()
+    font = pygame.font.SysFont(None, 24)
 
     player = Player()
 
@@ -73,6 +81,7 @@ def main():
 
         screen.fill(BG_COLOR)
         player.draw(screen)
+        draw_hud(screen, font, player)
         pygame.display.flip()
         clock.tick(60)
 
