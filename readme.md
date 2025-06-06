@@ -52,3 +52,8 @@ These points highlight the direction we plan to take in order to create a 2D exp
   which logs you find, altering resource placement to keep the challenge fresh.
 - **Branching moral choices** leading to dramatically different endings and replay value.
 - **Accessibility features** such as remappable controls, colorblind mode, and optional hints.
+
+## Art and Audio Direction
+The game employs a retro pixel-art aesthetic with a dark, muted palette. UI elements mirror this style for a unified look. Concept sketches and mockups belong in the `docs/` folder for easy reference.
+
+Ambient music and sound effects are loaded from `assets/audio`. Voice lines for HAL can be added under `assets/voice` using the filenames listed in each subfolder README. When present, these files are played automatically during the game.
