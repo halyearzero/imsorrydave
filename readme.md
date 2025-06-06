@@ -44,5 +44,7 @@ These points highlight the direction we plan to take in order to create a 2D exp
 - **Fully voiced characters**, including HAL's increasingly unsettling remarks.
 - **Adaptive soundtrack** that shifts with tension and player decisions.
 - **Emergent AI systems** that change puzzle solutions and hazards based on your play style.
+- **Prototype adaptive AI** now tracks how often you rely on oxygen canisters and
+  which logs you find, altering resource placement to keep the challenge fresh.
 - **Branching moral choices** leading to dramatically different endings and replay value.
 - **Accessibility features** such as remappable controls, colorblind mode, and optional hints.
