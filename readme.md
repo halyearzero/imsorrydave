@@ -18,6 +18,11 @@ Navigate between ship interiors and the zero-G exterior, reclaim control from HA
 ## Twist
 HAL adapts. Each time you succeed, the AI becomes smarter. The game ends when you achieve a full manual override… or when HAL finally manages to space you.
 
+## Expanded Storyline
+The project now includes a more detailed narrative with multiple possible outcomes.
+See [story_outline.md](story_outline.md) for the full plot description, including
+branching endings and character motivations revealed through onboard logs.
+
 ## Mechanics
 - EVA movement with inertia
 - Limited oxygen supply
