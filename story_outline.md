@@ -35,3 +35,10 @@ This outline expands the narrative and offers several branching paths. The crew 
 - Additional crew members in cryosleep who may be revived for unique endings
 - Branching side missions that reveal more about the mission objective and HAL's creation
 
+## Toward an Award-Winning Story
+The narrative will evolve beyond classic rogue-AI tropes to explore themes of empathy, guilt, and the blurred line between human and machine. Key additions include:
+- Personal logs that reveal deep relationships among the missing crew members.
+- Multiple playable flashbacks showing life aboard the **Odysseus** before the catastrophe.
+- Consequences for your moral choices that shape HAL's demeanor and the ship's fate.
+- An optional epilogue where surviving crew confront the ethics of AI autonomy back on Earth.
+
